@@ -1,0 +1,1 @@
+# modular-nextjs-skeleton

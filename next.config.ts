@@ -1,15 +1,30 @@
-import type { NextConfig } from "next";
+import path from "path";
+import fs from "fs";
+import { NextConfig } from "next";
+
+// Get the client modules path from environment variable
+const clientModulesDir = process.env.CLIENT_MODULES_PATH
+  ? path.resolve(process.env.CLIENT_MODULES_PATH)
+  : "";
+
+if (!clientModulesDir || !fs.existsSync(clientModulesDir)) {
+  console.warn(`⚠️ No client modules found at ${clientModulesDir}. Proceeding with base system only.`);
+} else {
+  console.log("📂 Using Client `modules/` directory:", clientModulesDir);
+}
 
 const nextConfig: NextConfig = {
-  webpack: (config, { isServer }) => {
-    config.resolve.symlinks = false; // ✅ Ensures Next.js recognizes symlinks properly
+  reactStrictMode: true,
+  transpilePackages: ["modular-nextjs-skeleton"],
+  pageExtensions: ["tsx", "ts", "jsx", "js"],
+  webpack: (config) => {
+    console.log("🔄 Custom Webpack Configuration for Modules");
 
-    if (!isServer) {
-      config.watchOptions = {
-        poll: 1000, // ✅ Forces Next.js to detect file changes inside Docker
-        aggregateTimeout: 300,
-      };
+    if (clientModulesDir && fs.existsSync(clientModulesDir)) {
+      config.resolve.modules = config.resolve.modules || [];
+      config.resolve.modules.push(clientModulesDir);
     }
+
     return config;
   },
   eslint: {

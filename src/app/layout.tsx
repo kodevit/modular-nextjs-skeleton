@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ReactNode } from "react";
-import { _do } from "@/lib/hook-system";
 import { GlobalModuleSystem } from "@/lib/server";
+import { _do } from "@/lib/hook-system";
 
 GlobalModuleSystem.registerModules();
 

@@ -1,18 +1,15 @@
-import { Hookable, HookCallback } from 'hookable'
+// lib/hook-system.ts
+
+import { Hookable, HookCallback } from "hookable";
+
+declare global {
+  var __GLOBAL_HOOK_SYSTEM__: HookSystem | undefined;
+}
 
 class HookSystem extends Hookable {
-  private static instance: HookSystem;
-
-  private constructor() {
+  public constructor() {
     super();
-  }
-
-  public static getInstance(): HookSystem {
-    if (!HookSystem.instance) {
-      console.log("new hook system instance")
-      HookSystem.instance = new HookSystem();
-    }
-    return HookSystem.instance;
+    console.log("🔥 HookSystem instance created!");
   }
 
   public async do(hook_name: string, ...arguments_: unknown[]) {
@@ -24,7 +21,13 @@ class HookSystem extends Hookable {
   }
 }
 
-const hookSystemInstance = HookSystem.getInstance();
+// ✅ FINAL FIX: Use `globalThis` instead of `global`
+const hookInstance = globalThis.__GLOBAL_HOOK_SYSTEM__ ?? new HookSystem();
+if (!globalThis.__GLOBAL_HOOK_SYSTEM__) {
+  console.log("⚡ Creating global HookSystem instance...");
+  globalThis.__GLOBAL_HOOK_SYSTEM__ = hookInstance;
+}
 
-export const _do = hookSystemInstance.do.bind(hookSystemInstance);
-export const _add = hookSystemInstance.add.bind(hookSystemInstance);
+export const GlobalHookSystem = globalThis.__GLOBAL_HOOK_SYSTEM__;
+export const _do = GlobalHookSystem!.do.bind(GlobalHookSystem);
+export const _add = GlobalHookSystem!.add.bind(GlobalHookSystem);

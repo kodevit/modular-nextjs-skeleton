@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
 import { Suspense, useState, useEffect } from "react";
 import { ReactNode } from "react";
+// ModuleSystem.registerModules()
 
 interface MyAppProps {
   children: ReactNode;
@@ -13,8 +14,10 @@ interface MyAppProps {
 export default function MyApp({ children, modulesData }: MyAppProps) {
   const pathname = usePathname();
   const [ActiveComponent, setActiveComponent] = useState<React.ComponentType | null>(null);
+  // ModuleSystem.registerModules()
 
   useEffect(() => {
+
     const ActiveRoute = modulesData
       .flatMap((mod) => mod.routes)
       .find((route) => pathname.startsWith(route.path));

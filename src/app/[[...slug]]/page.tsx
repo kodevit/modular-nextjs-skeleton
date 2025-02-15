@@ -3,6 +3,7 @@ import { loadModules } from "@/lib/load-modules";
 export default async function DynamicPage({ params }: { params: Promise<{ slug: string[] }> }) {
   const modulesData = await loadModules(); // ✅ Load modules on the server
   const { slug } = await params;
+  // ModuleSystem.registerModules()
 
   const path = slug ? `/${slug.join("/")}` : "/";
   const ActiveRoute = modulesData
@@ -14,7 +15,9 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug: 
       return (
         <div>
           <h1>Welcome to SaaSForge</h1>
-          <p>Available Modules:</p>
+          <h2>Base Routes:</h2>
+
+          <h2>Available Modules:</h2>
           <ul>
             {modulesData.flatMap((mod) =>
               mod.routes.map((route) => (

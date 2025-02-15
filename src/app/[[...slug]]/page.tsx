@@ -1,10 +1,10 @@
 import { loadModules } from "@/lib/load-modules";
 
-export default async function DynamicPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function DynamicPage({ params }: { params: Promise<{ slug: string[] }> }) {
   const modulesData = await loadModules(); // ✅ Load modules on the server
   const { slug } = await params;
 
-  const path = slug ? `/${slug}` : "/"; // ✅ Handle root path `/`
+  const path = slug ? `/${slug.join("/")}` : "/";
   const ActiveRoute = modulesData
     .flatMap((mod) => mod.routes)
     .find((route) => route.path === path);

@@ -15,7 +15,7 @@ class HookSystem extends Hookable {
     return HookSystem.instance;
   }
 
-  public async do(hook_name: string, ...arguments_: any[]) {
+  public async do(hook_name: string, ...arguments_: unknown[]) {
     await this.callHook(hook_name, ...arguments_);
   }
 

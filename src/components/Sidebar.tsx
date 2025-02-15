@@ -1,4 +1,4 @@
-import { _add, _do } from "@/app/lib/hook-system";
+import { _add, _do } from "@/lib/hook-system";
 
 _add("menu1", (items: MenuItem[]) => {
   items.push({
@@ -25,7 +25,7 @@ export interface MenuItem {
   href: string;
 }
 export default async function Sidebar() {
-  let menuItems: MenuItem[] = [{
+  const menuItems: MenuItem[] = [{
     label: "test",
     href: "test"
   }];

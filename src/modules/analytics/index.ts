@@ -1,4 +1,4 @@
-import { _add } from "@/app/lib/hook-system";
+import { _add } from "@/lib/hook-system";
 import { MenuItem } from "@/components/Sidebar";
 
 export const register = () => {

@@ -1,5 +1,5 @@
-import { register as Module1 } from "@/modules/test-module-1";
-import { register as Module2 } from "@/modules/test-module-2";
+import { register as Module1 } from "@/modules/crm";
+import { register as Module2 } from "@/modules/analytics";
 
 export class ModuleSystem {
   static modulesRegistered: boolean = false;
@@ -11,5 +11,6 @@ export class ModuleSystem {
     Module2();
     this.modulesRegistered = true;
   }
+  
 }
 
